@@ -7,3 +7,4 @@ export default connect(
     isLoggedIn: state.getIn(['auth', 'isLoggedIn'])
   })
 )(AppView);
+
