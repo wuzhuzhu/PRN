@@ -7,11 +7,13 @@ import {expect} from 'chai';
 import {initialState, dispatch} from '../../../../test/state';
 import * as CounterStateActions from '../CounterState';
 
+import _ from 'lodash'
+
 describe('CounterState', () => {
 
   // Example of how to test multiple dispatches in series
   describe('increment', () => {
-    const getValue = state => state.getIn(['counter', 'value']);
+    const getValue = state => _.get(state, 'counter.value');
 
     it('should increment the value property by one', () => {
       const [secondState] = dispatch(initialState, CounterStateActions.increment());

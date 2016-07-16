@@ -32,35 +32,44 @@ export function navigationCompleted() {
   return {type: NAVIGATION_COMPLETED};
 }
 
-const initialState = fromJS(
-  createNavigationState('MainNavigation', 'App', [
+const initialState = createNavigationState('MainNavigation', 'App', [
     createNavigationState('HomeTab', 'Home', [{key: 'Counter', title: 'Counter'}]),
     createNavigationState('ProfileTab', 'Profile', [{key: 'Color', title: 'Color'}])
-  ]));
+  ]);
 
 export default function NavigationReducer(state = initialState, action) {
   switch (action.type) {
     case PUSH_ROUTE:
-      return state
+      let iState = fromJS(state);
+      return iState
         .set('isNavigating', true)
-        .updateIn(['routes', state.get('index')], tabState =>
+        .updateIn(['routes', iState.get('index')], tabState =>
           tabState
             .update('routes', routes => routes.push(fromJS(action.payload)))
-            .set('index', tabState.get('routes').size));
+            .set('index', tabState.get('routes').size))
+        .toJS();
 
     case POP_ROUTE:
-      return state
+      let iState2 = fromJS(state);
+      return iState2
         .set('isNavigating', true)
-        .updateIn(['routes', state.get('index')], tabState =>
+        .updateIn(['routes', iState2.get('index')], tabState =>
           tabState
             .update('routes', routes => routes.pop())
-            .set('index', tabState.get('routes').size - 2));
+            .set('index', tabState.get('routes').size - 2))
+        .toJS();
 
     case SWITCH_TAB:
-      return state.set('index', action.payload);
+      return {
+        ...state,
+        index: action.payload,
+      }
 
     case NAVIGATION_COMPLETED:
-      return state.set('isNavigating', false);
+      return {
+        ...state,
+        isNavigating: false,
+      }
 
     default:
       return state;
@@ -79,5 +88,5 @@ function createNavigationState(key, title, routes) {
 }
 
 function isNavigationAnimationInProgress(state) {
-  return state.getIn(['navigationState', 'isNavigating']);
+  return _.get(state, 'navigationState.isNavigating')
 }
