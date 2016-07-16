@@ -28,9 +28,11 @@
     "check-coverage": "istanbul check-coverage coverage/coverage.json"
   },
   "dependencies": {
+    "apollo-client": "^0.4.1",
     "bluebird": "^3.3.5",
     "es6-symbol": "^3.0.2",
     "event-emitter": "^0.3.4",
+    "graphql-tag": "^0.1.9",
     "immutable": "^3.7.6",
     "lodash": "^4.11.0",
     "moment": "^2.12.0",
