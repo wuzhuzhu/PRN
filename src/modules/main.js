@@ -1,20 +1,25 @@
 import 'es6-symbol/implement';
-import {Provider} from 'react-redux';
+// import {Provider} from 'react-redux';  //Use ApolloProvider instead.
+import { ApolloProvider } from 'react-apollo';
 import store from '../redux/store';
+import { apolloClient } from '../redux/apollo'
 import AppViewContainer from './AppViewContainer';
 import React from 'react';
 import {Platform, BackAndroid} from 'react-native';
 import * as NavigationStateActions from './navigation/NavigationState';
+import gql from 'graphql-tag';
 
+// init Apollo gql tags.
+global['gql'] = gql;
 
 const iHealth = (Platform.OS === 'ios') ?
   React.createClass({ //
 
     render() {
       return (
-        <Provider store={store}>
+        <ApolloProvider store={store} client={apolloClient}>
           <AppViewContainer />
-        </Provider>
+        </ApolloProvider>
       );
     }
   }) :
@@ -47,9 +52,9 @@ const iHealth = (Platform.OS === 'ios') ?
 
   render() {
     return (
-      <Provider store={store}>
+      <ApolloProvider store={store} client={apolloClient}>
         <AppViewContainer />
-      </Provider>
+      </ApolloProvider>
     );
   }
 });

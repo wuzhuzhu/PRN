@@ -4,8 +4,12 @@ import NavigationStateReducer from '../modules/navigation/NavigationState';
 import AuthStateReducer from '../modules/auth/AuthState';
 import CounterStateReducer from '../modules/counter/CounterState';
 import SessionStateReducer, {RESET_STATE} from '../modules/session/SessionState';
+import {apolloReducer} from './apollo'
 
 const reducers = {
+  // Apollo Reducer
+  auth: apolloReducer,
+
   // Authentication/login state
   auth: AuthStateReducer,
 
