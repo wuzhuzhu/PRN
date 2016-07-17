@@ -41,13 +41,15 @@ export default function NavigationReducer(state = initialState, action) {
   switch (action.type) {
     case PUSH_ROUTE:
       let iState = fromJS(state);
-      return iState
+      const nextState = iState
         .set('isNavigating', true)
         .updateIn(['routes', iState.get('index')], tabState =>
           tabState
             .update('routes', routes => routes.push(fromJS(action.payload)))
             .set('index', tabState.get('routes').size))
         .toJS();
+      console.log(nextState)
+      return nextState
 
     case POP_ROUTE:
       let iState2 = fromJS(state);

@@ -39,23 +39,26 @@ export async function requestRandomNumber() {
 export default function CounterStateReducer(state = initialState, action = {}) {
   switch (action.type) {
     case INCREMENT:
+      console.log(state)
       return {
         ...state,
-        value: value +1
+        value: state.value +1
       };
     case RESET:
       return initialState;
 
     case RANDOM_REQUEST:
       return loop(
-        state.set('loading', true),
+        { ...state, loading: true },
         Effects.promise(requestRandomNumber)
       );
 
     case RANDOM_RESPONSE:
-      return state
-        .set('loading', false)
-        .set('value', action.payload);
+      return {
+        ...state,
+        loading: false,
+        value: action.payload,
+      };
 
     default:
       return state;
