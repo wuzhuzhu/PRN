@@ -1,4 +1,5 @@
 import {fromJS} from 'immutable';
+import _ from 'lodash';
 
 // Actions
 const PUSH_ROUTE = 'NavigationState/PUSH_ROUTE';
