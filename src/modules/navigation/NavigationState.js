@@ -14,6 +14,7 @@ export function switchTab(index) {
   };
 }
 
+
 // Action creators
 export function pushRoute(state) {
   return (dispatch, getState) => {
