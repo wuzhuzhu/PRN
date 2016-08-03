@@ -7,7 +7,7 @@ import { apolloClient } from './apollo';
 // define store middlewares as an array
 export default [
   promiseMiddleware,
-  thunkMiddleware,
+  thunkMiddleware.withExtraArgument(),
   apolloClient.middleware(),
   loggerMiddleware,
 ];
