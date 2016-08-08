@@ -3,20 +3,22 @@ import Auth0Lock from 'react-native-lock';
 import * as AuthStateActions from '../modules/auth/AuthState';
 import store from '../redux/store';
 const {Platform} = require('react-native');
+import {AsyncStorage} from 'react-native';
+import { AUTHENTICATION_STORAGE_KEY } from '../utils/authentication'
 
 const clientId = env.AUTH0_CLIENT_ID;
 const domain = env.AUTH0_DOMAIN;
 const authenticationEnabled = clientId && domain;
 
-let lock = null;
-if (authenticationEnabled) {
-  lock = new Auth0Lock({
-    clientId,
-    domain
-  });
-} else {
-  console.warn('Authentication not enabled: Auth0 configuration not provided');
-}
+// let lock = null;
+// if (authenticationEnabled) {
+export const lock = new Auth0Lock({
+  clientId,
+  domain
+});
+// } else {
+//   console.warn('Authentication not enabled: Auth0 configuration not provided');
+// }
 
 export function showLogin() {
   if (!authenticationEnabled) {
@@ -151,6 +153,7 @@ export function showLogin() {
       return;
     }
 
+    AsyncStorage.setItem(AUTHENTICATION_STORAGE_KEY, token.accessToken);
     // Authentication worked!
     store.dispatch(AuthStateActions.onUserLoginSuccess(profile, token));
   });
